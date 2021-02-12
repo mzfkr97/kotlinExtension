@@ -1,0 +1,9 @@
+fun FragmentTransaction.applyAppCustomAnimations():FragmentTransaction {
+    setCustomAnimations(
+            R.anim.slide_in_right,
+            R.anim.zoom_fade_out,
+            R.anim.zoom_fade_in,
+            R.anim.slide_out_left
+    )
+    return this
+}
