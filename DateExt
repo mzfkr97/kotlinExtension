@@ -1,0 +1,61 @@
+fun Date.getDayName(locale: Locale = Locale.US): String = SimpleDateFormat("EEEE", locale).format(this)
+
+fun Date.thisDayIsSunday(locale: Locale = Locale.US): Boolean = SimpleDateFormat("EEEE", locale).format(this).equals("Sunday", true)
+
+fun Date.getDay3LettersName(locale: Locale = Locale.US): String = SimpleDateFormat("EE", locale).format(this)
+
+fun Date.getDay1LetterName(locale: Locale = Locale.US): String = SimpleDateFormat("EEEEE", locale).format(this)
+
+fun Date.getMonthNumber(locale: Locale = Locale.US): String = SimpleDateFormat("MM", locale).format(this)
+
+fun Date.getMonthName(): String = SimpleDateFormat("MMMM", Locale.US).format(this).capitalize(Locale.ROOT)
+
+fun Date.getMonth3LettersName(): String = SimpleDateFormat("MMM", Locale.US).format(this)
+
+fun Date.getCurrentYear(): String = SimpleDateFormat("yyyy", Locale.US).format(this)
+
+fun Date.getDayNumber(): String = SimpleDateFormat("dd", Locale.US).format(this)
+
+fun Date.getNumberOfWeek(): String {
+    val cal = Calendar.getInstance()
+    cal.time = this
+    return cal[Calendar.WEEK_OF_YEAR].toString()
+}
+
+private fun getFutureDates(count: Int): List<Date> {
+    val futureDateList = mutableListOf<Date>()
+    val cal = Calendar.getInstance(Locale.US)
+    for (i in 0 until count) {
+        cal.add(Calendar.DATE, 1)
+        futureDateList.add(cal.time)
+    }
+    return futureDateList
+}
+
+private fun getPastDates(count: Int): List<Date> {
+    val pastDateList = mutableListOf<Date>()
+    val cal = Calendar.getInstance(Locale.US)
+    for (i in 0 until count) {
+        cal.add(Calendar.DATE, -1)
+        pastDateList.add(cal.time)
+    }
+    return pastDateList
+}
+
+fun getDates(pastDays: Int = 0, futureDays: Int = 60, includeCurrentDate: Boolean = true): List<CalendarItemUi> {
+    val futureList = getFutureDates(futureDays)
+    val cal = Calendar.getInstance(Locale.US)
+    val pastList = getPastDates(pastDays).reversed()
+    val dateList = if (includeCurrentDate) pastList + cal.time + futureList else pastList + futureList
+    val calendarList = mutableListOf<CalendarItemUi>()
+
+    for (i in dateList.indices) {
+        val item = CalendarItemUi(
+            id = i,
+            date = dateList[i],
+            isItemSelected = false
+        )
+        calendarList.add(item)
+    }
+    return calendarList
+}
