@@ -1,0 +1,24 @@
+fun Context.showAlertDialog(
+    dialogBuilder: AlertDialog.Builder.() -> Unit
+) {
+    AlertDialog.Builder(this)
+        .apply {
+            setCancelable(false)
+            dialogBuilder()
+            show()
+        }
+}
+
+fun AlertDialog.Builder.positiveButton(
+    positiveButtonTitle: String,
+    handleClick: (dialogInterface: DialogInterface) -> Unit = { it.dismiss() }
+) {
+    this.setPositiveButton(positiveButtonTitle) { dialogInterface, _ -> handleClick(dialogInterface) }
+}
+
+fun AlertDialog.Builder.negativeButton(
+    negativeButtonTitle: String,
+    handleClick: (dialogInterface: DialogInterface) -> Unit = { it.dismiss() }
+) {
+    this.setNegativeButton(negativeButtonTitle) { dialogInterface, _ -> handleClick(dialogInterface) }
+}
