@@ -1,0 +1,68 @@
+fun String.isNoValidPassword(confirmPass: String): Boolean {
+    return when (this.isEmpty() || confirmPass.isEmpty()) {
+        true -> true
+        else -> false
+    }
+}
+
+fun String?.checkDigit(): Boolean {
+    var ch: Char
+    var numberFlag = false
+    this?.forEach { element ->
+        ch = element
+        when {
+            Character.isDigit(ch) -> {
+                numberFlag = true
+            }
+        }
+    }
+    return numberFlag
+}
+
+fun String?.checkOneDigitAndOneLatter(): Boolean {
+    var ch: Char
+    var numberFlag = false
+    var letterFlag = false
+    this?.forEach { element ->
+        ch = element
+        when {
+            Character.isDigit(ch) -> {
+                numberFlag = true
+            }
+            Character.isLetter(ch) -> {
+                letterFlag = true
+            }
+        }
+    }
+    return numberFlag and letterFlag
+}
+
+fun String.digitsOnly(): String {
+    val regex = Regex("[^0-9]")
+    return regex.replace(this, "")
+}
+
+fun String.containsSpecialCharacter(): Boolean {
+    val pattern: Pattern = Pattern.compile("[^A-Za-z0-9\\-]")
+    val matcher: Matcher = pattern.matcher(this)
+    return matcher.find()
+}
+
+fun String.shortOrVeryLong(): Boolean {
+    return this.length <= 2 || this.length >= 30
+}
+
+fun String.isValidPhoneLength(): Boolean {
+    return this.length == 10 // TODO will be correct size phone number
+}
+
+fun String.minOrMaxLength(min: Int, max: Int): Boolean {
+    return this.length <= min || this.length >= max
+}
+fun String.maxLength(max: Int): Boolean {
+    return this.length >= max
+}
+
+fun String.fixLength(fixLength: Int): Boolean {
+    return this.length == fixLength
+}
