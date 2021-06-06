@@ -1,0 +1,60 @@
+
+fun RecyclerView.setDivider(@DrawableRes drawableRes: Int) {
+    val divider = DividerItemDecoration(
+        this.context,
+        DividerItemDecoration.VERTICAL
+    )
+    val drawable = ContextCompat.getDrawable(
+        this.context,
+        drawableRes
+    )
+    drawable?.apply {
+        divider.setDrawable(this)
+        addItemDecoration(divider)
+    }
+}
+
+fun ImageView.loadImage(
+    imageUrl: String,
+    @DrawableRes placeholderImage: Int = R.drawable.img_my_vehicle_place_holder,
+    @DrawableRes errorImage: Int = R.drawable.img_my_vehicle_place_holder,
+    imageIsLoading: (Boolean) -> Unit
+) {
+    Glide.with(this)
+        .load(imageUrl)
+        .placeholder(placeholderImage)
+        .error(errorImage)
+        .listener(object : RequestListener<Drawable?> {
+            override fun onLoadFailed(
+                e: GlideException?,
+                model: Any?,
+                target: com.bumptech.glide.request.target.Target<Drawable?>?,
+                isFirstResource: Boolean
+            ): Boolean {
+                imageIsLoading(false)
+                return false
+            }
+            override fun onResourceReady(
+                resource: Drawable?,
+                model: Any?,
+                target: com.bumptech.glide.request.target.Target<Drawable?>?,
+                dataSource: DataSource?,
+                isFirstResource: Boolean
+            ): Boolean {
+                imageIsLoading(false)
+                return false
+            }
+        })
+        .fitCenter()
+        .into(this)
+}
+
+fun View.slideVisibility(visibility: Boolean, durationTime: Long = 400) {
+    val transition = Slide(Gravity.BOTTOM)
+    transition.apply {
+        duration = durationTime
+        addTarget(this@slideVisibility)
+    }
+    TransitionManager.beginDelayedTransition(this.parent as ViewGroup, transition)
+    this.isVisible = visibility
+}
