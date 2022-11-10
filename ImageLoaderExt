@@ -1,0 +1,51 @@
+import android.graphics.drawable.Drawable
+import android.widget.ImageView
+import android.widget.ProgressBar
+import androidx.annotation.DrawableRes
+import androidx.core.view.isVisible
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
+import com.slutsk.roman.slutsktransp.R
+
+fun ImageView.loadImageRes(
+    imageUrl: String?,
+    progressBar: ProgressBar? = null,
+    @DrawableRes placeholder: Int = R.drawable.img__placehoder_default,
+    @DrawableRes error: Int = R.drawable.img__placehoder_default
+) {
+    imageUrl.let {
+        Glide.with(this.context)
+            .load(imageUrl)
+            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+            .listener(object : RequestListener<Drawable> {
+                override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any?,
+                    target: Target<Drawable>?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    progressBar?.isVisible = false
+                    return false
+                }
+
+                override fun onResourceReady(
+                    resource: Drawable?,
+                    model: Any?,
+                    target: Target<Drawable>?,
+                    dataSource: DataSource?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    progressBar?.isVisible = false
+                    return false
+                }
+            })
+            .fitCenter()
+            .placeholder(placeholder)
+            .error(error)
+            .into(this)
+    }
+}
