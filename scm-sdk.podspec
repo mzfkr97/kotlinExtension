@@ -2,7 +2,7 @@ Pod::Spec.new do |spec|
     spec.name                     = 'scm-sdk'
     spec.version                  = '7.7.26'
     spec.homepage                 = 'https://github.servicechannel.com/ServiceChannel/sdk-android'
-    spec.source       = { :http => "https://github.servicechannel.com/ServiceChannel/sdk-android/tree/master/scm-sdk/src/release/7.7.26/scmSdk.xcframework.zip" }
+    spec.source       = { :http => "https://github.servicechannel.com/ServiceChannel/sdk-android/raw/master/scm-sdk/src/release/7.7.26/scm-sdk-7.7.26.zip" }
     spec.authors                  = 'Service channel mobile team'
     spec.license                  = 'https://opensource.org/licenses/Apache-2.0'
     spec.summary                  = 'Service channel mobile team'
